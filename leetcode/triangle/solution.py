@@ -6,15 +6,22 @@ from queue import PriorityQueue
 class Solution:
 
     def minimumTotal(self, triangle: List[List[int]]) -> int:
+
         @cache
-        def solve(row, col):
+        def solve(row, col, path):
             if row == len(triangle) - 1:
-                return triangle[row][col]
+                cost, path = triangle[row][col], f"{triangle[row][col]}"
+            else:
+                leftCost, leftPath = solve(row + 1, col, path)
+                rightCost, rightPath = solve(row + 1, col + 1, path)
+                if leftCost < rightCost:
+                    cost, path = triangle[row][col] + leftCost, f"{triangle[row][col]} -> {leftPath}"
+                else:
+                    cost, path = triangle[row][col] + rightCost, f"{triangle[row][col]} -> {rightPath}"
 
-            return min(triangle[row][col] + solve(row+1, col),
-                       triangle[row][col] + solve(row+1, col+1))
+            return cost, path
 
-        return solve(0, 0)
+        return solve(0, 0, "")
 
     # Dijkstra's algorithm doesn't work for this problem because there might
     # be negative weights.
