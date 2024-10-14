@@ -68,15 +68,16 @@ class Solution:
             adj[u][v] = w
         pq = PriorityQueue()
         for v in vertices.keys():
-            if v[0] != len(inv_tri):
-                pq.put((vertices[v], v))
             if v[0] == 0:
-                pq.put((0, (0, v[0])))
+                pq.put((0, (0, v[1])))
         while pq.empty() is False:
             cost, u = pq.get()
+            if u not in adj:
+                continue
             for v in adj[u]:
                 w = adj[u][v]
                 if vertices[u] + w < vertices[v]:
                     vertices[v] = vertices[u] + w
+                    pq.put((vertices[v], v))
 
         return vertices[(len(inv_tri), 0)]
