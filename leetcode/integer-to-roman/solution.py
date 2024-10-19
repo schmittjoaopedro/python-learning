@@ -1,7 +1,15 @@
 class Solution:
     def intToRoman(self, num: int) -> str:
         roman = ""
+        for n in [(1000, "M"), (900, "CM"), (500, "D"), (400, "CD"),
+                  (100, "C"), (90, "XC"), (50, "L"), (40, "XL"),
+                  (10, "X"), (9, "IX"), (5, "V"), (4, "IV"), (1, "I")]:
+            while n[0] <= num:
+                roman += n[1]
+                num -= n[0]
+        return roman
 
+    def intToRoman2(self, num: int) -> str:
         # Process all thousands
         roman = ("M" * (num // 1000))
         num -= 1000 * (num // 1000)
