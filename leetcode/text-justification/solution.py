@@ -22,9 +22,8 @@ class Solution:
         if spaces == 0:
             return row[0] + (" " * (maxWidth - letters))
 
-        spread = (maxWidth - letters) / spaces
         sentence = row[0]
-        base_size = int(spread)
+        base_size = (maxWidth - letters) // spaces
         remaining = maxWidth - letters - base_size * spaces
         for word in row[1:]:
             size = base_size if remaining == 0 else base_size + 1
