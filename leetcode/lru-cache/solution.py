@@ -41,17 +41,13 @@ class LRUCache:
                     if prevItem and nextItem:
                         prevItem.next = nextItem
                         nextItem.prev = prevItem
-                        self.head.next = item
-                        item.prev = self.head
-                        item.next = None
-                        self.head = item
                     else:
                         self.tail = nextItem
                         nextItem.prev = None
-                        self.head.next = item
-                        item.next = None
-                        item.prev = self.head
-                        self.head = item
+                    self.head.next = item
+                    item.next = None
+                    item.prev = self.head
+                    self.head = item
 
 
 class Item:
