@@ -9,6 +9,27 @@ class ListNode:
 
 class Solution:
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        if not head.next:
+            return None
+
+        first, second = head, head
+        diff = 0
+        while diff < n:
+            first = first.next
+            diff += 1
+
+        if not first:
+            return head.next
+
+        while first.next:
+            first = first.next
+            second = second.next
+        second.next = second.next.next
+
+        return head
+
+
+    def removeNthFromEnd2(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
         llmap = {}
         curr = head
         i = 0
