@@ -9,6 +9,35 @@ class Solution:
         def search(r, c, level):
             if level == len(word):
                 return True
+            if r < 0 or c < 0 or r == m or c == n:
+                return False
+            if board[r][c] != word[level]:
+                return False
+            if (r, c) in stack:
+                return False
+
+            stack.add((r, c))
+            exist = (search(r - 1, c, level + 1) or
+                     search(r + 1, c, level + 1) or
+                     search(r, c - 1, level + 1) or
+                     search(r, c + 1, level + 1))
+            stack.remove((r, c))
+            return exist
+
+        for r in range(m):
+            for c in range(n):
+                if search(r, c, 0):
+                    return True
+
+        return False
+
+    def exist2(self, board: List[List[str]], word: str) -> bool:
+        m, n = len(board), len(board[0])
+        stack = set()
+
+        def search(r, c, level):
+            if level == len(word):
+                return True
 
             # Go up
             if r > 0 and (r - 1, c) not in stack and board[r - 1][c] == word[level]:
