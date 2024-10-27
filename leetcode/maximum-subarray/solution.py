@@ -15,7 +15,7 @@ class Solution:
 
         return dist
 
-    def maxSubArray(self, nums: List[int]) -> int:
+    def maxSubArray2(self, nums: List[int]) -> int:
         # Uses Dynamic Programming to cache already computed values
         @cache
         def solve(i):
@@ -30,3 +30,22 @@ class Solution:
             maxN = max(maxN, solve(i))
 
         return maxN
+
+    def maxSubArray(self, nums: List[int]) -> int:
+        maxSum, maxCurr = nums[0], 0
+        start, maxStart, maxEnd = 0, 0, 1
+
+        for i, n in enumerate(nums):
+            if maxCurr + n > n:
+                maxCurr = maxCurr + n
+            else:
+                maxCurr = n
+                start = i
+
+            if maxCurr > maxSum:
+                maxSum = maxCurr
+                maxStart = start
+                maxEnd = i + 1
+
+        print('\n', nums[maxStart:maxEnd], '=', sum(nums[maxStart:maxEnd]))
+        return maxSum
