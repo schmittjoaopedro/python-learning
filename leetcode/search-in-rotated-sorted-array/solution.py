@@ -3,6 +3,31 @@ from typing import List
 
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
+        left, right = 0, len(nums) - 1
+
+        while left < right:
+            mid = (left + right) // 2
+            if nums[mid] > nums[right]:
+                left = mid + 1
+            else:
+                right = mid
+
+        rotation = left
+        left, right = rotation, (len(nums) - 1) + rotation
+
+        while left <= right:
+            mid = (left + right) // 2
+            realmid = mid % len(nums)
+            if nums[realmid] == target:
+                return realmid
+            if target < nums[realmid]:
+                right = mid - 1
+            else:
+                left = mid + 1
+
+        return -1
+
+    def search2(self, nums: List[int], target: int) -> int:
 
         left, right = 0, len(nums) - 1
         while left <= right:
